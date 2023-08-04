@@ -1,0 +1,35 @@
+=> users
+user_id
+user_type
+first_name
+last_name
+email
+password
+active
+
+=> vegetables
+name
+color
+price
+
+=>user_types
+user_type_id
+user_type
+
+=>tokens
+token_id
+token_type_id
+token
+active
+
+=>token_types
+token_type_id
+token_type
+
+=>images
+ image_id
+ image_path
+ 
+
+
+
