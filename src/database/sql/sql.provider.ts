@@ -9,11 +9,12 @@ import { UserType } from './entities/user-type.entity';
 import { Vegetable } from './entities/vegetable.entity ';
 
 const { database, host, password, port, username } = sqlConfig;
+export let sequelize: Sequelize;
 export const databaseProviders = [
   {
     provide: 'SEQUELIZE',
     useFactory: async () => {
-      const sequelize = new Sequelize({
+      sequelize = new Sequelize({
         dialect: 'mysql',
         host: host,
         port: parseInt(port),
@@ -38,6 +39,7 @@ export const databaseProviders = [
         ]);
         await sequelize.authenticate();
         console.log('mysql database connection success...');
+
         if (process.env.SYNC_DATABASE === 'true') {
           await sequelize.sync({ force: true });
           console.log('database sync success');

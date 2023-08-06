@@ -1,24 +1,24 @@
-import { Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { responseModel } from './helpers/response.helper';
-import { LocalAuthGuard } from './guards/auth.guard';
+import { LocalAuthGuard } from './guards/passport-auth.guard';
 import { LocalStrategy } from './passport/localStorage.strategy';
+import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 
-@ApiTags('root')
 @Controller()
 export class AppController {
-  @ApiOperation({ summary: 'base url of application.' })
   @Get()
   getHello() {
     return responseModel('application up and running.');
   }
 
-  @UseGuards(LocalStrategy)
+  @UseGuards(LocalAuthGuard)
   @Post('/login')
-  login() {
-    return responseModel("ok");
+  login(@Req() request: Request) {
+    const { user } = request;
     console.log('====================================');
-    console.log('user login success');
+    console.log(user);
     console.log('====================================');
+    return responseModel('ok');
   }
 }

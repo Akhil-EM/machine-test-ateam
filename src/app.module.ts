@@ -6,10 +6,12 @@ import { SqlModule } from './database/sql/sql.module';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { UsersModule } from './resources/users/users.module';
+import { LocalStrategy } from './passport/localStorage.strategy';
+import { VegetablesModule } from './resources/vegetables/vegetables.module';
 
 dotenv.config();
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), SqlModule, UsersModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), SqlModule, UsersModule, VegetablesModule],
   controllers: [AppController],
   providers: [
     {
@@ -20,6 +22,7 @@ dotenv.config();
       provide: 'APP_FILTER',
       useClass: HttpExceptionFilter,
     },
+    LocalStrategy
   ],
 })
 export class AppModule {}

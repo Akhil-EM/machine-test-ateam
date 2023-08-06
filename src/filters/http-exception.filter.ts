@@ -6,10 +6,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-    const statusCode = 500 || exception.getStatus();
+    const statusCode = exception.getStatus ? exception.getStatus() : 500;
     const url = request.originalUrl;
     let errors: any;
-    console.log(exception);
 
     if (statusCode === 400) {
       errors = !exception.response.message

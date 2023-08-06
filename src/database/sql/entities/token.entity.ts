@@ -9,6 +9,7 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { TokenType } from './token-type.entity';
+import { User } from './user.entity';
 
 @Table({ tableName: 'tokens' })
 export class Token extends Model<Token> {
@@ -28,6 +29,13 @@ export class Token extends Model<Token> {
 
   @BelongsTo(() => TokenType)
   token_type: TokenType;
+
+  @ForeignKey(() => User)
+  @Column({ type: DataType.BIGINT })
+  user_id: number;
+
+  @BelongsTo(() => User)
+  user: TokenType;
 
   @Column({
     allowNull: false,

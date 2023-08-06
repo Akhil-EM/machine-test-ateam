@@ -8,24 +8,21 @@ import {
   IsString,
   IsEmail,
   MinLength,
+  IsIn,
 } from 'class-validator';
 
-export class CreateUserDto {
+export class SearchUserDto {
   @IsString()
   @IsNotEmpty()
-  @IsEmail()
-  public username: string;
+  public searchQuery: string;
 
   @IsString()
   @IsNotEmpty()
-  @MinLength(5)
-  public password: string;
+  @IsIn(['username', 'first_name', 'last_name'])
+  public orderBy: string;
 
   @IsString()
   @IsNotEmpty()
-  public firstName: string;
-
-  @IsString()
-  @IsNotEmpty()
-  public lastName: string;
+  @IsIn(['ASC', 'DESC'])
+  public order: string;
 }
