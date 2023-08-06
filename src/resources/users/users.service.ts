@@ -249,8 +249,9 @@ export class UsersService {
   async search(searchDto: SearchUserDto) {
     try {
       const [users, meta] = await sequelize.query(
-        `SELECT user_id,username,first_name,last_name 
-         FROM users 
+        `SELECT user_id,username,first_name,last_name,CONCAT('/images/',images.image_path) as 'profileImage'
+         FROM users
+         LEFT JOIN images ON images.image_id = users.profile_image_id
          WHERE users.username 
           LIKE '%${searchDto.searchQuery}%' 
            OR users.first_name 

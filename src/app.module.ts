@@ -8,10 +8,20 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { UsersModule } from './resources/users/users.module';
 import { LocalStrategy } from './passport/localStorage.strategy';
 import { VegetablesModule } from './resources/vegetables/vegetables.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 dotenv.config();
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), SqlModule, UsersModule, VegetablesModule],
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../uploads'),
+    }),
+    ConfigModule.forRoot({ isGlobal: true }),
+    SqlModule,
+    UsersModule,
+    VegetablesModule,
+  ],
   controllers: [AppController],
   providers: [
     {
@@ -22,7 +32,7 @@ dotenv.config();
       provide: 'APP_FILTER',
       useClass: HttpExceptionFilter,
     },
-    LocalStrategy
+    LocalStrategy,
   ],
 })
 export class AppModule {}
