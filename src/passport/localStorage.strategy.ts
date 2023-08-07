@@ -17,18 +17,18 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
   async validate(username: string, password: string): Promise<any> {
     //check for free mail
-    // if (checkFreeMail(username))
-    //   throw new HttpException(
-    //     'mail provider not acceptable',
-    //     HttpStatus.NOT_ACCEPTABLE,
-    //   );
+    if (checkFreeMail(username))
+      throw new HttpException(
+        'mail provider not acceptable',
+        HttpStatus.NOT_ACCEPTABLE,
+      );
 
-    // //check for password cases
-    // if (!passwordRegex.test(password))
-    //   throw new HttpException(
-    //     'Password should be a minimum of 8 letters with a combination of at least one number, one special character, and one Capital letter.',
-    //     HttpStatus.NOT_ACCEPTABLE,
-    //   );
+    //check for password cases
+    if (!passwordRegex.test(password))
+      throw new HttpException(
+        'Password should be a minimum of 8 letters with a combination of at least one number, one special character, and one Capital letter.',
+        HttpStatus.NOT_ACCEPTABLE,
+      );
 
     const user: any = await User.findOne({
       where: {

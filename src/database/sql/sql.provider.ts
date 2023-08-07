@@ -1,7 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { sqlConfig } from '../../config/database.config';
 import { User } from './entities/user.entity';
-import { seedDb } from './seed-db/seed.db';
 import { Image } from './entities/image.enity';
 import { TokenType } from './entities/token-type.entity';
 import { Token } from './entities/token.entity';
@@ -43,8 +42,6 @@ export const databaseProviders = [
         if (process.env.SYNC_DATABASE === 'true') {
           await sequelize.sync({ force: true });
           console.log('database sync success');
-          await seedDb();
-          console.log('database seeding completed.');
         }
       } catch (error) {
         console.log('mysql database error :', error.message);
